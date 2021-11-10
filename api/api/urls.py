@@ -23,7 +23,8 @@ from .views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('checkserver/', index, name='index'),
-    path('auth/', include('authapp.urls'))
+    path('auth/', include('authapp.urls')),
+    path('', include(('bookmarks.urls', 'main_api'), namespace='main_api')), 
 ]
 
 if settings.DEBUG:
