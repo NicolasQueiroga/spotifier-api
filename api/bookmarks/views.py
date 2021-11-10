@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-
+@permission_classes([IsAuthenticated])
 class BookmarkViews(viewsets.ModelViewSet):
     serializer_class = BookmarksSerializer
 
