@@ -2,7 +2,8 @@ from .models import *
 from .serializers import *
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 
 
 @permission_classes([IsAuthenticated])
@@ -16,6 +17,11 @@ class ArtistViews(viewsets.ModelViewSet):
         else:
             queryset = Artist.objects.all()
         return queryset
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(data='Artist Bookmark Deleted', status=status.HTTP_204_NO_CONTENT)
 
 
 @permission_classes([IsAuthenticated])
@@ -30,6 +36,11 @@ class AlbumViews(viewsets.ModelViewSet):
             queryset = Album.objects.all()
         return queryset
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(data='Album Bookmark Deleted', status=status.HTTP_204_NO_CONTENT)
+
 
 @permission_classes([IsAuthenticated])
 class PlaylistViews(viewsets.ModelViewSet):
@@ -42,6 +53,11 @@ class PlaylistViews(viewsets.ModelViewSet):
         else:
             queryset = Playlist.objects.all()
         return queryset
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(data='Playlist Bookmark Deleted', status=status.HTTP_204_NO_CONTENT)
 
 
 @permission_classes([IsAuthenticated])
@@ -55,3 +71,8 @@ class TrackViews(viewsets.ModelViewSet):
         else:
             queryset = Track.objects.all()
         return queryset
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(data='Track Bookmark Deleted', status=status.HTTP_204_NO_CONTENT)
