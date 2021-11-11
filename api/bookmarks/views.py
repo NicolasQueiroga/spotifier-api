@@ -1,19 +1,57 @@
-from django.http.response import Http404
-from .models import Bookmark, User
-from .serializers import BookmarksSerializer
-from rest_framework.decorators import api_view, permission_classes
+from .models import *
+from .serializers import *
+from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status, viewsets
-from rest_framework.response import Response
+from rest_framework import viewsets
+
 
 @permission_classes([IsAuthenticated])
-class BookmarkViews(viewsets.ModelViewSet):
-    serializer_class = BookmarksSerializer
+class ArtistViews(viewsets.ModelViewSet):
+    serializer_class = ArtistsSerializer
 
     def get_queryset(self):
         user = self.request.query_params.get('user')
         if user:
-            queryset = Bookmark.objects.filter(user=(user))
+            queryset = Artist.objects.filter(user=(user))
         else:
-            queryset = Bookmark.objects.all()
+            queryset = Artist.objects.all()
+        return queryset
+
+
+@permission_classes([IsAuthenticated])
+class AlbumViews(viewsets.ModelViewSet):
+    serializer_class = AlbumsSerializer
+
+    def get_queryset(self):
+        user = self.request.query_params.get('user')
+        if user:
+            queryset = Album.objects.filter(user=(user))
+        else:
+            queryset = Album.objects.all()
+        return queryset
+
+
+@permission_classes([IsAuthenticated])
+class PlaylistViews(viewsets.ModelViewSet):
+    serializer_class = PlaylistsSerializer
+
+    def get_queryset(self):
+        user = self.request.query_params.get('user')
+        if user:
+            queryset = Playlist.objects.filter(user=(user))
+        else:
+            queryset = Playlist.objects.all()
+        return queryset
+
+
+@permission_classes([IsAuthenticated])
+class TrackViews(viewsets.ModelViewSet):
+    serializer_class = TracksSerializer
+
+    def get_queryset(self):
+        user = self.request.query_params.get('user')
+        if user:
+            queryset = Track.objects.filter(user=(user))
+        else:
+            queryset = Track.objects.all()
         return queryset
